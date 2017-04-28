@@ -1,0 +1,30 @@
+{
+  "name": "soccer-bookmaker-odds",
+  "version": "0.0.1",
+  "description": "Historical data of bookmaker odds for some of the major soccer European leagues.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iredchuk/soccer-bookmaker-odds"
+  },
+  "author": {
+    "name": "Igor Redchuk",
+    "email": "redchuk@gmail.com"
+  },
+  "keywords": [
+    "data",
+    "football",
+    "soccer",
+    "bookmaker",
+    "odds"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "test": "node test-json-schema"
+  },
+  "dependencies": {
+    "ajv": "^5.0.1"
+  }
+}

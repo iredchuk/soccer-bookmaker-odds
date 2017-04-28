@@ -1,0 +1,78 @@
+{
+	"title": "League",
+	"type": "array",
+	"items": {
+		"title": "Season",
+		"type": "object",
+		"properties": {
+			"season": {
+				"type": "string"
+			},
+			"rounds": {
+				"type": "array",
+				"items": {
+					"title": "Round",
+					"type": "object",
+					"properties": {
+						"round": {
+							"type": "string"
+						},
+						"games": {
+							"type": "array",
+							"items": {
+								"title": "Game",
+								"type": "object",
+								"properties": {
+									"hTeam": {
+										"type": "string"
+									},
+									"aTeam": {
+										"type": "string"
+									},
+									"hScore": {
+										"type": "integer",
+										"minimum": 0
+									},
+									"aScore": {
+										"type": "integer",
+										"minimum": 0
+									},
+									"hOdd": {
+										"type": "number",
+										"exclusiveMinimum": 1
+									},
+									"dOdd": {
+										"type": "number",
+										"exclusiveMinimum": 1
+									},
+									"aOdd": {
+										"type": "number",
+										"exclusiveMinimum": 1
+									},
+									"hProb": {
+										"type": "number",
+										"exclusiveMinimum": 0,
+										"exclusiveMaximum": 1
+									},
+									"dProb": {
+										"type": "number",
+										"exclusiveMinimum": 0,
+										"exclusiveMaximum": 1
+									},
+									"aProb": {
+										"type": "number",
+										"exclusiveMinimum": 0,
+										"exclusiveMaximum": 1
+									}
+								},
+								"required": ["hTeam", "aTeam", "hOdd", "dOdd", "aOdd", "hProb", "dProb", "aProb"]
+							}
+						}
+					},
+					"required": ["round", "games"]
+				}
+			}
+		},
+		"required": ["season", "rounds"]
+	}
+}
