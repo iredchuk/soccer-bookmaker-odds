@@ -1,6 +1,6 @@
 {
   "name": "soccer-bookmaker-odds",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Historical data of bookmaker odds for some of the major soccer European leagues.",
   "repository": {
     "type": "git",
@@ -25,6 +25,6 @@
     "test": "node test-json-schema"
   },
   "dependencies": {
-    "ajv": "^5.0.1"
+    "ajv": "~5.1.5"
   }
 }
