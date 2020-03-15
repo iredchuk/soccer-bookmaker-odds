@@ -1,36 +1,47 @@
-const fs = require('fs');
-const path = require('path');
-const Ajv = require('ajv');
+const fs = require("fs");
+const path = require("path");
+const assert = require("assert").strict;
+const Ajv = require("ajv");
 
 const ajv = new Ajv();
-const schema = JSON.parse(fs.readFileSync('./schema/league.json'));
+const schema = JSON.parse(fs.readFileSync("./schema/league.json"));
 const validate = ajv.compile(schema);
 
-const testDataFile = function (filePath) {
-	fs.readFile(filePath, (err, data) => {
-		if (err) {
-			return console.error(`Error reading file ${filePath}: ${err}.`);
-		}
+const testFileIsComplete = (data, filePath) => {
+	const teamsCount = filePath.includes("germany") ? 18 : 20;
+	const expectedRounds = 2 * (teamsCount - 1);
+	const expectedGames = teamsCount / 2;
 
-		const json = JSON.parse(data);
-		const valid = validate(json);
-		if (valid) {
-			console.log(`${filePath} -> Passed`);
-		} else {
-			throw new Error(JSON.stringify(validate.errors));
-		}
+	data.forEach(season => {
+		assert.equal(
+			season.rounds.length,
+			expectedRounds,
+			`Wrong rounds count in ${filePath}, season ${season.season}`
+		);
+
+		season.rounds.forEach(round => {
+			assert.equal(
+				round.games.length,
+				expectedGames,
+				`Wrong games count in ${filePath}, season ${season.season}, round ${round.round}`
+			);
+		});
 	});
-}
+};
 
-const dirPath = './data/json';
+const testDataFile = filePath => {
+	const json = fs.readFileSync(filePath);
+	const data = JSON.parse(json);
 
-fs.readdir(dirPath, (err, files) => {
-	if (err) {
-		return console.error(`Error reading directory ${dirPath}: ${err}.`);
-	}
-	if (files.length === 0) {
-		return console.error(`No files found in directory ${dirPath}.`);
-	}
+	const valid = validate(data);
+	assert(valid, JSON.stringify(validate.errors));
 
-	files.map(fileName => path.join(dirPath, fileName)).forEach(testDataFile);
-});
+	testFileIsComplete(data, filePath);
+
+	console.log(`${filePath} -> Passed`);
+};
+
+const dirPath = "./data/json";
+const fileNames = fs.readdirSync(dirPath);
+assert.notEqual(fileNames.length, 0, `No files found in directory ${dirPath}.`);
+fileNames.map(fileName => path.join(dirPath, fileName)).forEach(testDataFile);
