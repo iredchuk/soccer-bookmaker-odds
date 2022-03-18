@@ -27,6 +27,6 @@
 		"test": "node test-json-schema"
 	},
 	"dependencies": {
-		"ajv": "^6.12.0"
+		"ajv": "^8.10.0"
 	}
 }
